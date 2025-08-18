@@ -11,5 +11,6 @@
     <extensions defaultExtensionNs="com.intellij">
         <toolWindow factoryClass="com.github.sebnoirot.cortex.toolWindow.MyToolWindowFactory" id="MyToolWindow"/>
         <postStartupActivity implementation="com.github.sebnoirot.cortex.startup.MyProjectActivity" />
+        <notificationGroup id="Cortex Notifications" displayType="BALLOON" isLogByDefault="false"/>
     </extensions>
 </idea-plugin>

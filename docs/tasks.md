@@ -15,7 +15,7 @@ Conventions:
 
 ## MVP (Weeks 1–2)
 
-- [ ] [MVP-1] Detect `cortex.yaml` and show onboarding tip
+- [x] [MVP-1] Detect `cortex.yaml` and show onboarding tip
   - Acceptance criteria:
     - Project service detects presence of `cortex.yaml` (configurable globs later) and shows a one-time notification guiding user to configure Cortex endpoint/token.
     - Notification does not block UI and never repeats unnecessarily (persist flag).
