@@ -5,6 +5,7 @@
     <vendor>seb-noirot</vendor>
 
     <depends>com.intellij.modules.platform</depends>
+    <depends>org.jetbrains.plugins.yaml</depends>
 
     <resource-bundle>messages.MyBundle</resource-bundle>
 

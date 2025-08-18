@@ -1,0 +1,30 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://example.com/schemas/cortex.schema.json",
+  "title": "Cortex Configuration",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "name": {
+      "type": "string",
+      "description": "Display name of the entity"
+    },
+    "service": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "id": { "type": "string" },
+        "url": { "type": "string", "format": "uri" }
+      }
+    },
+    "tags": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "kind": {
+      "type": "string",
+      "enum": ["service", "team", "scorecard"]
+    }
+  },
+  "required": ["name", "kind"]
+}
