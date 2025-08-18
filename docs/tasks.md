@@ -21,7 +21,7 @@ Conventions:
     - Notification does not block UI and never repeats unnecessarily (persist flag).
     - Threading: detection off EDT for IO; UI updates on EDT.
 
-- [ ] [MVP-2] Settings UI with secure credentials and health check
+- [x] [MVP-2] Settings UI with secure credentials and health check
   - Acceptance criteria:
     - Configurable: Base URL (validated), optional org slug, access token stored/retrieved via PasswordSafe.
     - "Test connection" performs health/version check (off EDT) and displays status (on EDT) without printing token.

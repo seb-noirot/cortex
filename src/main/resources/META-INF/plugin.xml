@@ -12,5 +12,6 @@
         <toolWindow factoryClass="com.github.sebnoirot.cortex.toolWindow.MyToolWindowFactory" id="MyToolWindow"/>
         <postStartupActivity implementation="com.github.sebnoirot.cortex.startup.MyProjectActivity" />
         <notificationGroup id="Cortex Notifications" displayType="BALLOON" isLogByDefault="false"/>
+        <applicationConfigurable id="cortex.settings" instance="com.github.sebnoirot.cortex.ui.CortexSettingsConfigurable" displayName="Cortex" groupId="tools"/>
     </extensions>
 </idea-plugin>
