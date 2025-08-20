@@ -63,6 +63,53 @@ Conventions:
     - Test connection uses API endpoint GET /api/v1/catalog/definitions and reports success on HTTP 200.
     - All network calls off EDT; token never logged; clear error messages.
 
+- [x] [BETA-2b] Propose opening Cortex project from x-cortex-tag
+  - Acceptance criteria:
+    - Detect x-cortex-tag in cortex.yaml (e.g., under info) and look up entity via GET {apiBase}/api/v1/catalog/{tag}.
+    - On match, show a notification with an "Open in Cortex" action that opens the admin URL for the resolved type/id.
+    - Networking off EDT; no token in logs; don’t spam (one-time notification).
+
+- [x] [BETA-2c] Link x-cortex-owners (provider=CORTEX) to Teams in Cortex
+  - Acceptance criteria:
+    - Detect owners entries under x-cortex-owners with provider CORTEX; add gutter link on the name.
+    - Resolve the entity via GET {apiBase}/api/v1/catalog/{name} and open admin URL /admin/team/{id}?catalogPageSlug=teams.
+    - Networking off EDT; no token in logs; tooltip shows the name; graceful fallback.
+
+- [x] [BETA-2d] Link x-cortex-groups to Teams in Cortex
+  - Acceptance criteria:
+    - Detect x-cortex-groups scalar value and add a gutter link on it.
+    - Resolve the entity via GET {apiBase}/api/v1/catalog/{groupName} and open admin URL /admin/team/{id}?catalogPageSlug=teams (type may be "group").
+    - Networking off EDT; no token in logs; tooltip shows the group name; graceful fallback.
+
+- [x] [BETA-2e] Link x-cortex-dependencies tags to Cortex entities
+  - Acceptance criteria:
+    - Detect items under x-cortex-dependencies and add a gutter link on the tag value.
+    - Resolve via GET {apiBase}/api/v1/catalog/{tag} and open admin URL /admin/{type}/{id}?catalogPageSlug={plural}.
+    - Networking off EDT; no token in logs; tooltip shows the tag; graceful fallback.
+
+- [x] [BETA-2f] Settings: link to create Personal Access Token
+  - Acceptance criteria:
+    - Add a "Create token…" button/link near the token input in Settings › Tools › Cortex.
+    - Clicking opens {baseUrl}/admin/settings/personal-access-tokens in the browser.
+    - Uses the normalized Base URL from the form (or saved settings); shows inline message if base URL is invalid.
+
+- [x] [BETA-2g] Settings: allow deleting Cortex configuration
+  - Acceptance criteria:
+    - Provide a "Delete configuration…" action in Settings › Tools › Cortex.
+    - Clears Base URL, API URL, Org Slug, and securely removes the stored token from PasswordSafe.
+    - UI confirms the action and resets the form; no secrets logged; work on EDT.
+
+- [x] [BETA-2h] Editor banner: Configure Cortex on opening cortex.yaml
+  - Acceptance criteria:
+    - When configuration (Base URL) is missing and a cortex.yaml file is opened, show an editor notification bar at the top.
+    - The bar contains a link/button to open Settings › Tools › Cortex.
+    - No EDT blocking; simple, non-intrusive, and disappears once configured.
+
+- [x] [BETA-2i] Dynamic refresh after settings changes
+  - Acceptance criteria:
+    - When Cortex settings are applied or deleted while cortex.yaml is open, the editor banner disappears/appears accordingly and gutter links update without reopening the file.
+    - Implemented by updating editor notifications and restarting the daemon analyzer across open projects on apply/delete.
+
 - [ ] [BETA-3] Quick fixes for common issues
   - Acceptance criteria:
     - Quick fixes to insert required blocks, normalize key casing, and add missing tags.

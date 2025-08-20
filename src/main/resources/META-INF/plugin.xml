@@ -15,5 +15,6 @@
         <notificationGroup id="Cortex Notifications" displayType="BALLOON" isLogByDefault="false"/>
         <applicationConfigurable id="cortex.settings" instance="com.github.sebnoirot.cortex.ui.CortexSettingsConfigurable" displayName="Cortex" groupId="tools"/>
         <codeInsight.lineMarkerProvider language="yaml" implementationClass="com.github.sebnoirot.cortex.yaml.CortexYamlLineMarkerProvider"/>
+        <editorNotificationProvider implementation="com.github.sebnoirot.cortex.yaml.CortexYamlEditorNotificationProvider"/>
     </extensions>
 </idea-plugin>

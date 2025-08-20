@@ -79,4 +79,78 @@ internal class CortexEntityInfoService {
         val match = regex.find(body) ?: return null
         return match.groupValues.getOrNull(1)
     }
+
+    data class CatalogEntity(val id: String, val type: String)
+
+    /**
+     * Fetch catalog entity by tag using API base: GET /api/v1/catalog/{tag}
+     * Returns CatalogEntity or null on failure.
+     */
+    fun fetchCatalogEntityByTag(apiBaseUrl: String, token: String?, tag: String): CatalogEntity? {
+        return try {
+            val url = CortexUrl.build(apiBaseUrl, "/api/v1/catalog/${tag}")
+            val reqBuilder = HttpRequest.newBuilder()
+                .GET()
+                .timeout(Duration.ofSeconds(8))
+                .uri(URI.create(url))
+                .header("User-Agent", "Cortex-IntelliJ-Plugin")
+            if (!token.isNullOrBlank()) {
+                reqBuilder.header("Authorization", "Bearer $token")
+            }
+            val response = client.send(reqBuilder.build(), HttpResponse.BodyHandlers.ofString())
+            if (response.statusCode() in 200..299) {
+                val body = response.body()
+                parseCatalogEntity(body)
+            } else {
+                log.debug("Catalog lookup failed: HTTP ${response.statusCode()}")
+                null
+            }
+        } catch (t: Throwable) {
+            log.debug("Catalog lookup error: ${t.message}")
+            null
+        }
+    }
+
+    /**
+     * Minimal JSON body parser to map the catalog entity response to a data class without extra dependencies.
+     * Expects fields: id (string) and type (string) at the top level of the JSON object.
+     */
+    private fun parseCatalogEntity(body: String): CatalogEntity? {
+        // Use simple, tolerant regexes; encapsulated to centralize parsing.
+        val id = Regex("\"id\"\\s*:\\s*\"([^\"]+)\"").find(body)?.groupValues?.getOrNull(1)
+        val type = Regex("\"type\"\\s*:\\s*\"([^\"]+)\"").find(body)?.groupValues?.getOrNull(1)
+        return if (!id.isNullOrBlank() && !type.isNullOrBlank()) CatalogEntity(id, type) else null
+    }
+
+    data class TeamInfo(val id: String)
+
+    /**
+     * Fetch team info by tag or id using API base: GET /api/v1/teams/{tagOrId}
+     * Returns TeamInfo or null on failure.
+     */
+    fun fetchTeamByTagOrId(apiBaseUrl: String, token: String?, tagOrId: String): TeamInfo? {
+        return try {
+            val url = CortexUrl.build(apiBaseUrl, "/api/v1/teams/${tagOrId}")
+            val reqBuilder = HttpRequest.newBuilder()
+                .GET()
+                .timeout(Duration.ofSeconds(8))
+                .uri(URI.create(url))
+                .header("User-Agent", "Cortex-IntelliJ-Plugin")
+            if (!token.isNullOrBlank()) {
+                reqBuilder.header("Authorization", "Bearer $token")
+            }
+            val response = client.send(reqBuilder.build(), HttpResponse.BodyHandlers.ofString())
+            if (response.statusCode() in 200..299) {
+                val body = response.body()
+                val id = Regex("\"id\"\\s*:\\s*\"([^\"]+)\"").find(body)?.groupValues?.getOrNull(1)
+                if (!id.isNullOrBlank()) TeamInfo(id) else null
+            } else {
+                log.debug("Team lookup failed: HTTP ${response.statusCode()}")
+                null
+            }
+        } catch (t: Throwable) {
+            log.debug("Team lookup error: ${t.message}")
+            null
+        }
+    }
 }
