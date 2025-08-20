@@ -29,7 +29,7 @@ class CortexUrlTest {
 
     @Test
     fun derive_api_base_prepends_api() {
-        assertEquals("https://api.cortex.sportradar.ag", CortexUrl.deriveApiBase("https://cortex.sportradar.ag"))
+        assertEquals("https://api.cortex.example.com", CortexUrl.deriveApiBase("https://cortex.example.com"))
         assertEquals("https://api.example.com", CortexUrl.deriveApiBase("https://example.com"))
         // idempotent for already api.*
         assertEquals("https://api.example.com", CortexUrl.deriveApiBase("https://api.example.com"))

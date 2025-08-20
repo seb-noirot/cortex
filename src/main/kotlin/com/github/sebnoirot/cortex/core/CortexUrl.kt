@@ -28,7 +28,7 @@ internal object CortexUrl {
 
     /**
      * Derive the Cortex API base URL from the UI base (product) URL.
-     * Example: https://cortex.sportradar.ag -> https://api.cortex.sportradar.ag
+     * Example: https://cortex.example.com -> https://api.cortex.example.com
      * If the host already starts with "api.", it is returned as-is.
      */
     fun deriveApiBase(uiBaseUrl: String): String {

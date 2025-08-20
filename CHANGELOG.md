@@ -18,5 +18,6 @@
 ### Changed
  - Settings UI: form now anchors to the top of the page and text fields have constrained preferred widths to avoid horizontal scrollbars in the Settings dialog.
  - Settings UI: eliminated horizontal scrollbar after adding the "Create token…" button by making the token row responsive.
+ - Removed vendor-specific examples; replaced all references to sportradar with neutral example.com in tests, samples, and comments.
 ### Added
 - Settings: "Delete configuration…" action clears Base URL, API URL, Org Slug, and stored token [BETA-2g]
