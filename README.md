@@ -49,3 +49,8 @@ Plugin based on the [IntelliJ Platform Plugin Template][template].
 
 [template]: https://github.com/JetBrains/intellij-platform-plugin-template
 [docs:plugin-description]: https://plugins.jetbrains.com/docs/intellij/plugin-user-experience.html#plugin-description-and-presentation
+
+
+## Features (Early Beta)
+- YAML gutter icon on `service.id` in `cortex.yaml` files to open the corresponding Cortex page. [BETA-2]
+- Tooltip/hover shows the service name when available, fetched in the background and cached (network off EDT). Secrets are never logged.

@@ -26,4 +26,12 @@ class CortexUrlTest {
         assertEquals("https://example.com/api/version", CortexUrl.build("https://example.com/", "api/version"))
         assertEquals("https://example.com/api/version", CortexUrl.build("https://example.com", "/api/version"))
     }
+
+    @Test
+    fun derive_api_base_prepends_api() {
+        assertEquals("https://api.cortex.sportradar.ag", CortexUrl.deriveApiBase("https://cortex.sportradar.ag"))
+        assertEquals("https://api.example.com", CortexUrl.deriveApiBase("https://example.com"))
+        // idempotent for already api.*
+        assertEquals("https://api.example.com", CortexUrl.deriveApiBase("https://api.example.com"))
+    }
 }

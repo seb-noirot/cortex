@@ -23,6 +23,23 @@ internal object CortexHealthClient {
             return Result(false, "Invalid base URL: ${t.message}")
         }
 
+        return sendGet(url, token)
+    }
+
+    /**
+     * Check the Catalog endpoint on the API base by calling /api/v1/catalog/definitions.
+     * 200 status is considered a successful connection.
+     */
+    fun checkApi(apiBaseUrl: String, token: String?): Result {
+        val url = try {
+            CortexUrl.build(apiBaseUrl, "/api/v1/catalog/definitions")
+        } catch (t: Throwable) {
+            return Result(false, "Invalid API base URL: ${t.message}")
+        }
+        return sendGet(url, token)
+    }
+
+    private fun sendGet(url: String, token: String?): Result {
         val builder = HttpRequest.newBuilder()
             .uri(URI.create(url))
             .timeout(Duration.ofSeconds(8))
@@ -48,7 +65,7 @@ internal object CortexHealthClient {
         } catch (t: Exception) {
             // Do not include token
             log.warn("Health check failed: ${t.message}")
-            Result(false, t.message ?: "Request failed", null, null)
+            return Result(false, t.message ?: "Request failed", null, null)
         }
     }
 }

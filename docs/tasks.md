@@ -27,19 +27,19 @@ Conventions:
     - "Test connection" performs health/version check (off EDT) and displays status (on EDT) without printing token.
     - No secrets logged; errors redact token with "***".
 
-- [ ] [MVP-3] Bundle default JSON Schema and map to `cortex.yaml`
+- [x] [MVP-3] Bundle default JSON Schema and map to `cortex.yaml`
   - Acceptance criteria:
     - Provide a bundled starter JSON Schema resource.
     - Implement `yaml.schemaProviderFactory` binding to files named `cortex.yaml`.
     - Validation runs and highlights schema violations.
 
-- [ ] [MVP-4] Minimal inspections (local)
+- [ ] [MVP-4] Minimal inspections (local) (skipped per request)
   - Acceptance criteria:
     - Implement inspections for: required keys, enum validation, URL format.
     - Tests cover positive/negative cases using LightPlatform fixtures where applicable.
     - Inspections fail softly (no crashes) and are performant.
 
-- [ ] [MVP-5] Juni action: Generate Improvement Plan
+- [ ] [MVP-5] Juni action: Generate Improvement Plan (skipped per request)
   - Acceptance criteria:
     - IDE action "Generate Improvement Plan (Juni)" reads docs/requirements.md, runs configured Juni command, writes docs/plan.md, and opens it.
     - If docs/requirements.md is missing, offers to create a stub.
@@ -47,15 +47,21 @@ Conventions:
 
 ## Beta (Weeks 3–4)
 
-- [ ] [BETA-1] Completion contributor with background index
+- [ ] [BETA-1] Completion contributor with background index (skipped per request)
   - Acceptance criteria:
     - YAML completions for keys/enums and known entity IDs (services, teams, scorecards).
     - Background fetch to index entities; cached with TTL; off EDT with throttling/debounce.
 
-- [ ] [BETA-2] Annotator + clickable references + hovers
+- [x] [BETA-2] Annotator + clickable references + hovers
   - Acceptance criteria:
     - Clickable IDs resolve to Cortex UI URLs; gutter or inline links.
     - Hover info fetched via API and cached; offline degrades gracefully.
+
+- [x] [BETA-2a] Derive/store API URL and validate connectivity
+  - Acceptance criteria:
+    - When a Cortex domain is saved (e.g., https://cortex.example.com), derive and persist API base (https://api.cortex.example.com).
+    - Test connection uses API endpoint GET /api/v1/catalog/definitions and reports success on HTTP 200.
+    - All network calls off EDT; token never logged; clear error messages.
 
 - [ ] [BETA-3] Quick fixes for common issues
   - Acceptance criteria:

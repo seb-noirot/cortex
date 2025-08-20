@@ -60,10 +60,11 @@ internal class CortexSettingsConfigurable : Configurable {
                 statusLabel.text = "Invalid base URL"
                 return@addActionListener
             }
+            val apiBase = CortexUrl.deriveApiBase(normalized)
             val typedToken = String(tokenField.password).takeIf { it.isNotBlank() }
             val token = typedToken ?: service<CortexCredentials>().getToken()
             ApplicationManager.getApplication().executeOnPooledThread {
-                val result = CortexHealthClient.check(normalized, token)
+                val result = CortexHealthClient.checkApi(apiBase, token)
                 val modality = rootPanel?.let { ModalityState.stateForComponent(it) } ?: ModalityState.any()
                 ApplicationManager.getApplication().invokeLater({
                     if (rootPanel == null || rootPanel?.isShowing != true) {
@@ -97,6 +98,7 @@ internal class CortexSettingsConfigurable : Configurable {
         val normalized = CortexUrl.normalizeBaseUrl(baseUrlField.text)
         if (normalized == null) throw ConfigurationException("Invalid Base URL")
         settings.baseUrl = normalized
+        settings.apiUrl = CortexUrl.deriveApiBase(normalized)
         settings.orgSlug = orgSlugField.text.trim().ifBlank { null }
         val typed = String(tokenField.password)
         if (typed.isNotBlank()) {

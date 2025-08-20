@@ -15,6 +15,7 @@ internal class CortexSettings : PersistentStateComponent<CortexSettings.State> {
 
     data class State(
         var baseUrl: String? = null,
+        var apiUrl: String? = null,
         var orgSlug: String? = null,
     )
 
@@ -30,6 +31,12 @@ internal class CortexSettings : PersistentStateComponent<CortexSettings.State> {
         get() = state.baseUrl
         set(value) {
             state.baseUrl = value
+        }
+
+    var apiUrl: String?
+        get() = state.apiUrl
+        set(value) {
+            state.apiUrl = value
         }
 
     var orgSlug: String?

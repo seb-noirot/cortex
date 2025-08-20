@@ -26,6 +26,20 @@ internal object CortexUrl {
         }
     }
 
+    /**
+     * Derive the Cortex API base URL from the UI base (product) URL.
+     * Example: https://cortex.sportradar.ag -> https://api.cortex.sportradar.ag
+     * If the host already starts with "api.", it is returned as-is.
+     */
+    fun deriveApiBase(uiBaseUrl: String): String {
+        val uri = URI(uiBaseUrl)
+        val host = uri.host
+        val apiHost = if (host.startsWith("api.")) host else "api.$host"
+        val scheme = uri.scheme ?: "https"
+        val portPart = if (uri.port != -1) ":${uri.port}" else ""
+        return "$scheme://$apiHost$portPart"
+    }
+
     fun build(baseUrl: String, path: String): String {
         val b = baseUrl.removeSuffix("/")
         val p = if (path.startsWith("/")) path else "/$path"
